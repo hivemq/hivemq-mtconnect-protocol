@@ -1,0 +1,28 @@
+name: CI Check
+
+on: [ push ]
+
+concurrency:
+  group: ${{ github.ref }}-check
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      - name: Checkout Edge Plugins
+        run: |
+          git clone https://github.com/hivemq/hivemq-edge.git ../hivemq-edge
+          cd ../hivemq-edge
+          git checkout ${GITHUB_REF#refs/heads/} || true
+          ln -s ./edge-plugins ../edge-plugins
+          cd ../hivemq-mtconnect-protocol
+      - name: Setup Java
+        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4
+        with:
+          distribution: 'adopt'
+          java-version: '17'
+      - name: Check
+        run: ./gradlew test
