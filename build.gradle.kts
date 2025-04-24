@@ -129,6 +129,15 @@ artifacts {
 license {
     header = file("HEADER")
     mapping("java", "SLASHSTAR_STYLE")
+    excludes(
+        listOf(
+            "**/schemas/assets/**/*.java",
+            "**/schemas/devices/**/*.java",
+            "**/schemas/error/**/*.java",
+            "**/schemas/streams/**/*.java",
+            "**/*.xml",
+        )
+    )
 }
 
 downloadLicenses {
