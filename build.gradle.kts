@@ -2,48 +2,74 @@ import nl.javadude.gradle.plugins.license.DownloadLicensesExtension.license
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
+buildscript {
+    if (gradle.includedBuilds.any { it.name == "edge-plugins" }) {
+        plugins {
+            id("com.hivemq.edge-version-updater")
+        }
+    }
+}
+
 plugins {
-    java
+    `java-library`
+    `maven-publish`
+    signing
     alias(libs.plugins.defaults)
-    alias(libs.plugins.shadow)
+    alias(libs.plugins.javadocLinks)
     alias(libs.plugins.license)
-    id("com.hivemq.edge-version-updater")
+    alias(libs.plugins.metadata)
+    alias(libs.plugins.nexusPublish)
     id("com.hivemq.third-party-license-generator")
 }
 
+plugins.withId("com.hivemq.version-updater") {
+    project.ext.set("versionUpdaterFiles", arrayOf("README.adoc"))
+}
+
 group = "com.hivemq"
+description = "A HiveMQ Java implementation of the MTConnect Protocol"
+
+metadata {
+    readableName.set("HiveMQ MTConnect Protocol")
+    organization {
+        name.set("HiveMQ GmbH")
+        url.set("https://www.hivemq.com/")
+    }
+    license {
+        apache2()
+    }
+    developers {
+        register("caoccao") {
+            fullName.set("Sam Cao")
+            email.set("sam.cao@hivemq.com")
+        }
+    }
+    github {
+        org.set("hivemq")
+        repo.set("hivemq-mtconnect-protocol")
+        issues()
+    }
+}
 
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
     }
+    withJavadocJar()
+    withSourcesJar()
 }
 
 repositories {
     mavenCentral()
-    maven { url = uri("https://jitpack.io") }
-    exclusiveContent {
-        forRepository {
-            maven {
-                url = uri("https://jitpack.io")
-            }
-        }
-        filter {
-            includeGroup("com.github.simon622.mqtt-sn")
-            includeGroup("com.github.simon622")
-        }
-    }
 }
 
 dependencies {
-    compileOnly(libs.hivemq.edge.adapterSdk)
-    compileOnly(libs.apache.commonsIO)
-    compileOnly(libs.slf4j.api)
+    api(libs.jetbrains.annotations)
     compileOnly(libs.jackson.databind)
     compileOnly(libs.jackson.dataformat.xml)
-    // V4 supports XSD 1.1
-    implementation(libs.jakarta.xml.bind.api.v4)
-    implementation(libs.jaxb.impl.v4)
+    compileOnly(libs.jakarta.xml.bind.api.v4)
+    compileOnly(libs.jaxb.impl.v4)
+    compileOnly(libs.slf4j.api)
 }
 
 dependencies {
@@ -51,12 +77,12 @@ dependencies {
     testImplementation(libs.assertj)
     testImplementation(libs.jackson.databind)
     testImplementation(libs.jackson.dataformat.xml)
-
-    testImplementation(platform(libs.junit.bom))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation(libs.hivemq.edge.adapterSdk)
+    testImplementation(libs.jakarta.xml.bind.api.v4)
+    testImplementation(libs.jaxb.impl.v4)
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.mockito.junitJupiter)
+    testImplementation(platform(libs.junit.bom))
+    testRuntimeOnly(libs.junit.platform)
 }
 
 tasks.test {
@@ -70,7 +96,7 @@ tasks.test {
 tasks.register<Copy>("copyAllDependencies") {
     shouldRunAfter("assemble")
     from(configurations.runtimeClasspath)
-    into("${buildDir}/deps/libs")
+    into("${layout.buildDirectory.get()}/deps/libs")
 }
 
 tasks.named("assemble") { finalizedBy("copyAllDependencies") }
@@ -95,9 +121,9 @@ val thirdPartyLicenses: Configuration by configurations.creating {
 }
 
 artifacts {
-    add(releaseBinary.name, tasks.shadowJar)
     add(thirdPartyLicenses.name, tasks.updateThirdPartyLicenses.flatMap { it.outputDirectory })
 }
+
 /* ******************** compliance ******************** */
 
 license {
@@ -209,7 +235,32 @@ tasks.updateThirdPartyLicenses {
     outputDirectory.set(layout.buildDirectory.dir("distribution/third-party-licenses"))
 }
 
-val javaComponent = components["java"] as AdhocComponentWithVariants
-javaComponent.withVariantsFromConfiguration(configurations.shadowRuntimeElements.get()) {
-    skip()
+/* ******************** publishing ******************** */
+
+publishing {
+    publications {
+        register<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+}
+
+signing {
+    val signingKey: String? by project
+    val signingPassword: String? by project
+    useInMemoryPgpKeys(signingKey, signingPassword)
+    sign(publishing.publications["maven"])
+}
+
+nexusPublishing {
+    repositories {
+        sonatype()
+    }
+}
+
+/* ******************** checks ******************** */
+
+license {
+    header = file("HEADER")
+    mapping("java", "SLASHSTAR_STYLE")
 }

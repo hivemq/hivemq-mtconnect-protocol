@@ -1,13 +1,9 @@
 rootProject.name = "hivemq-mtconnect-protocol"
 
 pluginManagement {
-    includeBuild("../hivemq-edge/edge-plugins")
-}
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("../hivemq-edge/gradle/libs.versions.toml"))
+    plugins {
+        if (file("../hivemq-edge/edge-plugins").exists()) {
+            includeBuild("../hivemq-edge/edge-plugins")
         }
     }
 }
