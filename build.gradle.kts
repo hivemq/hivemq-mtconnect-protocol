@@ -42,8 +42,8 @@ dependencies {
     compileOnly(libs.jackson.databind)
     compileOnly(libs.jackson.dataformat.xml)
     // V4 supports XSD 1.1
-    implementation(libs.jakarta.xml.bind.api.v4)
-    implementation(libs.jaxb.impl.v4)
+    implementation(libs.jaxb4.impl)
+    implementation(libs.jaxb4.bind)
 }
 
 dependencies {
