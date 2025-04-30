@@ -16,6 +16,9 @@ jobs:
         with:
           distribution: 'adopt'
           java-version: '17'
+      - name: Checkout Edge Plugins
+        run: |
+          git clone https://github.com/hivemq/hivemq-edge.git ../hivemq-edge
       - name: Check
         run: ./gradlew check
       - name: Publish to Maven Central
