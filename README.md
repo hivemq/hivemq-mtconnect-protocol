@@ -16,6 +16,44 @@ HiveMQ MTConnect Protocol is a Java implementation of the MTConnect protocol.
 - Support Conversion from MTConnect XML to Java Entities
 - Support MTConnect Schema Version Detection
 
+## Installation
+
+### Maven
+
+```xml
+<dependency>
+  <groupId>com.hivemq</groupId>
+  <artifactId>hivemq-mtconnect-protocol</artifactId>
+  <version>1.0.0</version>
+</dependency>
+<dependency>
+    <groupId>jakarta.xml.bind</groupId>
+    <artifactId>jakarta.xml.bind-api</artifactId>
+    <version>4.0.2</version>
+</dependency>
+<dependency>
+    <groupId>com.sun.xml.bind</groupId>
+    <artifactId>jaxb-impl</artifactId>
+    <version>4.0.5</version>
+</dependency>
+```
+
+### Gradle
+
+```kotlin
+implementation 'com.hivemq:hivemq-mtconnect-protocol:1.0.0'
+implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.2'
+implementation 'com.sun.xml.bind:jaxb-impl:4.0.5'
+```
+
+### Gradle (Kotlin)
+
+```kotlin
+implementation("com.hivemq:hivemq-mtconnect-protocol:1.0.0")
+implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.2")
+implementation("com.sun.xml.bind:jaxb-impl:4.0.5")
+```
+
 ## Quick Start
 
 ```java
