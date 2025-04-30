@@ -2,6 +2,20 @@
 
 HiveMQ MTConnect Protocol is a Java implementation of the MTConnect protocol.
 
+## Features
+
+- Support MTConnect Schemas
+
+| MTConnect Schema | Version   |
+| ---------------- | --------- |
+| Assets           | 1.2 - 2.4 |
+| Devices          | 1.0 - 2.4 |
+| Error            | 1.1 - 2.4 |
+| Streams          | 1.1 - 2.4 |
+
+- Support Conversion from MTConnect XML to Java Entities
+- Support MTConnect Schema Version Detection
+
 ## Quick Start
 
 ```java
@@ -99,9 +113,13 @@ There is a [Smart Manufacturing Systems (SMS) Test Bed](https://www.nist.gov/lab
 - [Time series of most recent values collected for each data item](https://smstestbed.nist.gov/vds/sample)
 - [Report of all data items available](https://smstestbed.nist.gov/vds/probe)
 
+## Release Notes
+
+- [Release Notes](RELEASE-NOTES.md)
+
 ## References
 
 - [mtconnect.org](https://www.mtconnect.org/)
-- [Github](http://www.github.com/mtconnect)
-- [Schema](https://github.com/mtconnect/schema)
+- [MTConnect Github](http://www.github.com/mtconnect)
+- [MTConnect Schema](https://github.com/mtconnect/schema)
 - [jaxb-ri](https://eclipse-ee4j.github.io/jaxb-ri/)
