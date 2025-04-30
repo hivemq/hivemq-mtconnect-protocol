@@ -1,0 +1,32 @@
+[versions]
+apache-commonsIO = "2.19.0"
+assertj = "3.27.3"
+jackson = "2.18.3"
+jakarta-xml-bind-v4 = "4.0.2"
+jaxb-v4 = "4.0.5"
+jetbrains = "24.1.0"
+junit-jupiter = "5.12.2"
+junit-platform-launcher = "1.12.2"
+mockito = "5.17.0"
+slf4j = "2.0.17"
+
+[libraries]
+apache-commonsIO = { module = "commons-io:commons-io", version.ref = "apache-commonsIO" }
+assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+jackson-databind = { module = "com.fasterxml.jackson.core:jackson-databind", version.ref = "jackson" }
+jackson-dataformat-xml = { module = "com.fasterxml.jackson.dataformat:jackson-dataformat-xml", version.ref = "jackson" }
+jakarta-xml-bind-api-v4 = { module = "jakarta.xml.bind:jakarta.xml.bind-api", version.ref = "jakarta-xml-bind-v4" }
+jaxb-impl-v4 = { module = "com.sun.xml.bind:jaxb-impl", version.ref = "jaxb-v4" }
+jetbrains-annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains" }
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-jupiter" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit-jupiter" }
+junit-platform = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit-platform-launcher" }
+mockito-junitJupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
+
+[plugins]
+defaults = { id = "io.github.sgtsilvio.gradle.defaults", version = "0.2.0" }
+javadocLinks = { id = "io.github.sgtsilvio.gradle.javadoc-links", version = "0.8.0" }
+license = { id = "com.github.hierynomus.license", version = "0.16.1" }
+metadata = { id = "io.github.sgtsilvio.gradle.metadata", version = "0.5.0" }
+nexusPublish = { id = "io.github.gradle-nexus.publish-plugin", version = "1.3.0" }

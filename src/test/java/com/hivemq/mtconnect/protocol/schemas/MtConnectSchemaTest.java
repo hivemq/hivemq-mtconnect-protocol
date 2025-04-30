@@ -15,17 +15,20 @@
  */
 package com.hivemq.mtconnect.protocol.schemas;
 
-import com.hivemq.mtconnect.protocol.schemas.MtConnectSchema;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
 import org.apache.commons.io.IOUtils;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -33,6 +36,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MtConnectSchemaTest {
+    protected @NotNull Locale orginalLocale;
+
+    @AfterEach
+    protected void afterEach() {
+        Locale.setDefault(orginalLocale);
+    }
+
+    @BeforeEach
+    public void beforeEach() {
+        orginalLocale = Locale.getDefault();
+        Locale.setDefault(Locale.US);
+    }
+
     @Test
     public void whenInputXmlIsAssets_1_2_thenXmlValidationShouldPass() throws Exception {
         final Unmarshaller unmarshaller = MtConnectSchema.Assets_1_2.getUnmarshaller();
