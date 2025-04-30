@@ -2,6 +2,24 @@
 
 HiveMQ MTConnect Protocol is a Java implementation of the MTConnect protocol.
 
+## Quick Start
+
+```java
+// Extract the schema location from an XML string.
+String schemaLocation = MtConnectSchema.extractSchemaLocation(xmlString);
+
+// Get the MTConnect schema from a schema location.
+MtConnectSchema schema = MtConnectSchema.of(schemaLocation);
+
+// Convert an XML string to an MTConnect entity.
+try (StringReader stringReader = new StringReader(xmlString)) {
+    JAXBElement<?> element = (JAXBElement<?>) unmarshaller.unmarshal(stringReader);
+    com.hivemq.mtconnect.protocol.schemas.streams.streams_2_0.MTConnectStreamsType
+            mtConnectStreamsType =
+            (com.hivemq.mtconnect.protocol.schemas.streams.streams_2_0.MTConnectStreamsType) element.getValue();
+}
+```
+
 ## Design
 
 ### Schema Validation

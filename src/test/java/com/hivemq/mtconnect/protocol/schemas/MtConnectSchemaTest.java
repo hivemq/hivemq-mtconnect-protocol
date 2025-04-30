@@ -15,7 +15,6 @@
  */
 package com.hivemq.mtconnect.protocol.schemas;
 
-import com.hivemq.mtconnect.protocol.schemas.MtConnectSchema;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
