@@ -18,7 +18,7 @@ plugins {
     alias(libs.plugins.javadocLinks)
     alias(libs.plugins.license)
     alias(libs.plugins.metadata)
-    alias(libs.plugins.nexusPublish)
+    alias(libs.plugins.mavenCentralPublishing)
     id("com.hivemq.third-party-license-generator")
 }
 
@@ -102,15 +102,6 @@ tasks.register<Copy>("copyAllDependencies") {
 tasks.named("assemble") { finalizedBy("copyAllDependencies") }
 
 /* ******************** artifacts ******************** */
-
-val releaseBinary: Configuration by configurations.creating {
-    isCanBeConsumed = true
-    isCanBeResolved = false
-    attributes {
-        attribute(Category.CATEGORY_ATTRIBUTE, objects.named("binary"))
-        attribute(Usage.USAGE_ATTRIBUTE, objects.named("release"))
-    }
-}
 
 val thirdPartyLicenses: Configuration by configurations.creating {
     isCanBeConsumed = true
@@ -259,12 +250,6 @@ signing {
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
     sign(publishing.publications["maven"])
-}
-
-nexusPublishing {
-    repositories {
-        sonatype()
-    }
 }
 
 /* ******************** checks ******************** */
