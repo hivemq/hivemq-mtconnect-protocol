@@ -2,7 +2,7 @@
 apache-commonsIO = "2.21.0"
 assertj = "3.27.7"
 jackson = "2.21.0"
-jakarta-xml-bind-v4 = "4.0.4"
+jakarta-xml-bind-v4 = "4.0.5"
 jaxb-v4 = "4.0.6"
 jetbrains = "24.1.0"
 junit-jupiter = "5.14.2"
