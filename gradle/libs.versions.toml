@@ -1,7 +1,7 @@
 [versions]
-apache-commonsIO = "2.21.0"
+apache-commonsIO = "2.22.0"
 assertj = "3.27.7"
-jackson = "2.21.4"
+jackson = "2.22.0"
 jakarta-xml-bind-v4 = "4.0.5"
 jaxb-v4 = "4.0.9"
 jetbrains = "24.1.0"
