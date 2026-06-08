@@ -19,7 +19,7 @@ plugins {
     alias(libs.plugins.license)
     alias(libs.plugins.metadata)
     alias(libs.plugins.mavenCentralPublishing)
-    id("com.hivemq.third-party-license-generator")
+    alias(libs.plugins.hivemqLicense)
 }
 
 plugins.withId("com.hivemq.version-updater") {
@@ -227,12 +227,9 @@ downloadLicenses {
     dependencyConfiguration = "runtimeClasspath"
 }
 
-tasks.updateThirdPartyLicenses {
-    dependsOn(tasks.downloadLicenses)
+hivemqLicense {
     projectName.set(project.name)
-    group = "license"
-    dependencyLicense.set(tasks.downloadLicenses.get().xmlDestination.resolve("dependency-license.xml"))
-    outputDirectory.set(layout.buildDirectory.dir("distribution/third-party-licenses"))
+    thirdPartyLicenseDirectory.set(layout.buildDirectory.dir("distribution/third-party-licenses"))
 }
 
 /* ******************** publishing ******************** */
