@@ -1,14 +1,14 @@
 [versions]
 apache-commonsIO = "2.22.0"
 assertj = "3.27.7"
-jackson = "2.22.2"
+jackson = "2.22.3"
 jakarta-xml-bind-v4 = "4.0.5"
 jaxb-v4 = "4.0.9"
 jetbrains = "24.1.0"
 junit-jupiter = "5.14.4"
 junit-platform-launcher = "1.14.4"
 mockito = "5.23.0"
-slf4j = "2.0.19"
+slf4j = "2.0.20"
 
 [libraries]
 apache-commonsIO = { module = "commons-io:commons-io", version.ref = "apache-commonsIO" }
